@@ -3,7 +3,7 @@ import SignUp from "./components/SignUp";
 
 function App() {
   return (
-    <div className="bg-gray-100 w-full h-screen text-center">
+    <div className="container mx-auto flex items-center justify-center">
       <SignUp />
     </div>
   );
