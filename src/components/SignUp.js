@@ -7,6 +7,7 @@ import { validation } from "../helper/Validation";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { notify } from "../helper/toastify";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const [data, setData] = useState({
@@ -22,10 +23,6 @@ const SignUp = () => {
   const [touched, setTouched] = useState({});
 
   const [errors, setErrors] = useState({});
-
-  useEffect(() => {
-    setErrors({})
-  }, [])
 
   useEffect(() => {
     setErrors(validation(data));
@@ -63,6 +60,7 @@ const SignUp = () => {
 
   return (
     <div className="container bg-white p-5 my-10 w-full sm:w-96 rounded-md shadow-md mx-4 border">
+        <h1 className="text-2xl font-bold text-center">ثبت نام</h1>
       <form className="" autoComplete="off" onSubmit={submitHandler}>
         <div className="flex flex-col my-7 font-bold text-lg ">
           <label className="text-right" htmlFor="name">
@@ -193,9 +191,9 @@ const SignUp = () => {
           </button>
             <div className="flex items-center justify-center">
                 <span className="font-bold ml-1">اکانت داری؟</span>
-                <a className="text-blue-800 font-bold" href="#">
+                <Link to="LogIn" className="text-blue-800 font-bold" href="#">
             ورود
-          </a>
+          </Link>
             </div>
         </div>
       </form>

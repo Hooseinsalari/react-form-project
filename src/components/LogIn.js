@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+
+// function
+import { validation } from "../helper/Validation";
+
+// toastify
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { notify } from "../helper/toastify";
+import { Link } from "react-router-dom";
 
 const LogIn = () => {
     const [data, setData] = useState({
         name: "",
         email: "",
         password: "",
-        confirmPassword: "",
-        gender: "",
-        isAccept: false,
       });
     
       // this state using for when user touch input
@@ -16,19 +22,11 @@ const LogIn = () => {
       const [errors, setErrors] = useState({});
     
       useEffect(() => {
-        setErrors({})
-      }, [])
-    
-      useEffect(() => {
         setErrors(validation(data));
       }, [data, touched]);
     
       const changeHandler = (event) => {
-        if (event.target.name === "isAccept") {
-          setData({ ...data, [event.target.name]: event.target.checked });
-        } else {
-          setData({ ...data, [event.target.name]: event.target.value });
-        }
+        setData({ ...data, [event.target.name]: event.target.value });
       };
     
       const focusHandler = (event) => {
@@ -38,7 +36,7 @@ const LogIn = () => {
       const submitHandler = (event) => {
           event.preventDefault()
           if(!Object.keys(errors).length) {
-              notify("ثبت نامت انجام شد خوش اومدی", 'success')
+              notify("خوش اومدی رفیق", 'success')
           }
           else {
             notify("یه جای کار میلنگه", 'error')
@@ -46,15 +44,13 @@ const LogIn = () => {
                 name: true,
                 email: true,
                 password: true,
-                confirmPassword: true,
-                isAccept: true,
-                gender: true,
             })
           }
       }
     
       return (
         <div className="container bg-white p-5 my-10 w-full sm:w-96 rounded-md shadow-md mx-4 border">
+            <h1 className="text-2xl font-bold text-center">ورود به حساب</h1>
           <form className="" autoComplete="off" onSubmit={submitHandler}>
             <div className="flex flex-col my-7 font-bold text-lg ">
               <label className="text-right" htmlFor="name">
@@ -116,78 +112,16 @@ const LogIn = () => {
                 </span>
               )}
             </div>
-            <div className="flex flex-col my-7 font-bold text-lg ">
-              <label className="text-right" htmlFor="confirmPassword">
-                تکرار پسورد
-              </label>
-              <input
-                name="confirmPassword"
-                onChange={changeHandler}
-                onFocus={focusHandler}
-                value={data.confirmPassword}
-                type="password"
-                className={`rounded-md border-2 font-bold ${
-                    errors.confirmPassword && touched.confirmPassword ? "animate-shake border-red-500" : ""
-                  }`}
-              />
-              {errors.confirmPassword && touched.confirmPassword && (
-                <span className="bg-red-200 py-0.5 px-1 rounded-sm text-slate-800 text-sm lg:text-base w-fit mt-1 mr-1">
-                  {errors.confirmPassword}
-                </span>
-              )}
-            </div>
-            <div className="flex flex-col my-7 font-bold text-lg ">
-              <label className="text-right" htmlFor="confirmPassword">
-                جنسیت
-              </label>
-              <select
-                name="gender"
-                className={`rounded-md border-2 font-bold ${
-                    errors.gender && touched.gender ? "animate-shake border-red-500" : ""
-                  }`}
-                onChange={changeHandler}
-                onFocus={focusHandler}
-              >
-                <option className="font-bold" value="">انتخاب کن</option>
-                <option className="font-bold" value="women">زن</option>
-                <option className="font-bold" value="men">مرد</option>
-                <option className="font-bold" value="other">دیگر</option>
-              </select>
-              {errors.gender && touched.gender && (
-                <span className="bg-red-200 py-0.5 px-1 rounded-sm text-slate-800 text-sm lg:text-base w-fit mt-1 mr-1">
-                  {errors.gender}
-                </span>
-              )}
-            </div>
-            <div className="flex items-center flex-col my-6">
-              <div className="flex items-center flex-row-reverse justify-center">
-                <label htmlFor="name" className="mr-2 font-bold">
-                  قوانین را خواندم و قبول کردم
-                </label>
-                <input
-                  name="isAccept"
-                  onChange={changeHandler}
-                  onFocus={focusHandler}
-                  value={data.isAccept}
-                  type="checkbox"
-                  className={`${data.isAccept && 'rounded-full transition-all ease-in-out duration-500'} cursor-pointer ring-0`}
-                />
-              </div>
-              {errors.isAccept && touched.isAccept && (
-                <span className="bg-red-200 py-0.5 px-1 rounded-sm text-slate-800 text-sm lg:text-base w-fit mt-1 mr-1 font-bold">
-                  {errors.isAccept}
-                </span>
-              )}
-            </div>
+            
             <div className="flex items-center flex-col">
               <button type="submit" className="bg-blue-500 w-full p-2 rounded-md text-slate-200 text-lg my-2">
-                ثبت نام
+                ورود
               </button>
                 <div className="flex items-center justify-center">
-                    <span className="font-bold ml-1">اکانت داری؟</span>
-                    <a className="text-blue-800 font-bold" href="#">
-                ورود
-              </a>
+                    <span className="font-bold ml-1">اکانت نداری؟</span>
+                    <Link to="/" className="text-blue-800 font-bold" href="#">
+                        ثبت نام
+                    </Link>
                 </div>
             </div>
           </form>
